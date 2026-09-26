@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>InsureFlow | Claims</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/dashboard.css"
+    >
+
+
+    <style>
+
+        /* =========================================
+           CLAIM MODAL
+        ========================================= */
+
+        .modal-overlay {
+
+            position: fixed;
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(4, 14, 27, 0.72);
+
+            backdrop-filter:
+                blur(8px);
+
+            z-index: 9999;
+
+        }
+
+
+        .modal-overlay.show {
+
+            display: flex;
+
+        }
+
+
+        .claim-modal {
+
+            width:
+                min(620px, 100%);
+
+            max-height:
+                90vh;
+
+            overflow-y:
+                auto;
+
+            padding:
+                34px;
+
+            position: relative;
+
+            border:
+                1px solid
+                rgba(200, 163, 95, 0.35);
+
+            border-radius:
+                20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #faf8f2
+                );
+
+            box-shadow:
+                0 35px 90px
+                rgba(0, 0, 0, 0.30);
+
+        }
+
+
+        .claim-modal-header {
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .claim-modal-header span {
+
+            display: block;
+
+            margin-bottom:
+                7px;
+
+            color:
+                #c8a35f;
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .claim-modal-header h2 {
+
+            margin:
+                0 0 7px;
+
+            color:
+                #061426;
+
+            font-family:
+                "Manrope",
+                Arial,
+                sans-serif;
+
+            font-size:
+                24px;
+
+        }
+
+
+        .claim-modal-header p {
+
+            margin:
+                0;
+
+            color:
+                #657184;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .modal-close {
+
+            position:
+                absolute;
+
+            top:
+                18px;
+
+            right:
+                20px;
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            color:
+                #657184;
+
+            background:
+                #f0eee8;
+
+            font-size:
+                21px;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .modal-close:hover {
+
+            color:
+                #061426;
+
+            background:
+                #e5cb91;
+
+        }
+
+
+        .claim-form {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                18px;
+
+        }
+
+
+        .form-group {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .form-group.full-width {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .form-group label {
+
+            margin-bottom:
+                7px;
+
+            color:
+                #465366;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width:
+                100%;
+
+            padding:
+                0 13px;
+
+            outline:
+                none;
+
+            border:
+                1px solid
+                #dcdfe3;
+
+            border-radius:
+                8px;
+
+            color:
+                #172333;
+
+            background:
+                #ffffff;
+
+            font-family:
+                inherit;
+
+            font-size:
+                12px;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .form-group input,
+        .form-group select {
+
+            height:
+                45px;
+
+        }
+
+
+        .form-group textarea {
+
+            min-height:
+                100px;
+
+            padding:
+                13px;
+
+            resize:
+                vertical;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color:
+                #c8a35f;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(200, 163, 95, .12);
+
+        }
+
+
+        .modal-actions {
+
+            grid-column:
+                1 / -1;
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                10px;
+
+            margin-top:
+                8px;
+
+        }
+
+
+        .modal-cancel {
+
+            padding:
+                11px 18px;
+
+            border:
+                none;
+
+            border-radius:
+                8px;
+
+            color:
+                #596477;
+
+            background:
+                #eceef1;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .modal-submit {
+
+            padding:
+                11px 20px;
+
+            border:
+                1px solid
+                rgba(200, 163, 95, .35);
+
+            border-radius:
+                8px;
+
+            color:
+                #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b2946,
+                    #061426
+                );
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 8px 20px
+                rgba(6, 20, 38, .16);
+
+        }
+
+
+        .modal-submit:hover {
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .modal-submit:disabled {
+
+            opacity:
+                .6;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        .form-message {
+
+            grid-column:
+                1 / -1;
+
+            display:
+                none;
+
+            padding:
+                11px 13px;
+
+            border-radius:
+                8px;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .form-message.show {
+
+            display:
+                block;
+
+        }
+
+
+        .form-message.error {
+
+            color:
+                #a33d3d;
+
+            background:
+                #fff1f1;
+
+            border:
+                1px solid
+                #efcaca;
+
+        }
+
+
+        .form-message.success {
+
+            color:
+                #28785a;
+
+            background:
+                #edf7f1;
+
+            border:
+                1px solid
+                #d4ecdf;
+
+        }
+
+
+        .required {
+
+            color:
+                #b44d4d;
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .claim-modal {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .claim-form {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-group.full-width {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .modal-actions {
+
+                grid-column:
+                    auto;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app-layout">
+
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                I
+            </div>
+
+            <div>
+
+                <h1>
+                    InsureFlow
+                </h1>
+
+                <span>
+                    Insurance Platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+
+            <a
+                href="/"
+                class="nav-item"
+            >
+
+                <span>⌂</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a
+                href="/customers"
+                class="nav-item"
+            >
+
+                <span>♙</span>
+                <span>Customers</span>
+
+            </a>
+
+
+            <a
+                href="/policies"
+                class="nav-item"
+            >
+
+                <span>▣</span>
+                <span>Policies</span>
+
+            </a>
+
+
+            <a
+                href="/claims"
+                class="nav-item active"
+            >
+
+                <span>◇</span>
+                <span>Claims</span>
+
+            </a>
+
+
+            <a
+                href="/analytics"
+                class="nav-item"
+            >
+
+                <span>◈</span>
+                <span>Analytics</span>
+
+            </a>
+
+
+            <div class="nav-divider"></div>
+
+
+            <a
+                href="/settings"
+                class="nav-item"
+            >
+
+                <span>⚙</span>
+                <span>Settings</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="secure-badge">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        System Operational
+                    </strong>
+
+                    <small>
+                        All services healthy
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="version">
+                InsureFlow v1.0.0
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+
+            <div class="page-heading">
+
+                <span class="eyebrow">
+                    INSURANCE OPERATIONS
+                </span>
+
+                <h2>
+                    Claims
+                </h2>
+
+                <p>
+                    Manage and monitor insurance claims.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <button
+                    class="icon-button"
+                    type="button"
+                    title="Notifications"
+                >
+
+                    ♢
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <div class="user-profile">
+
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+
+                    <div class="user-details">
+
+                        <strong>
+                            Admin User
+                        </strong>
+
+                        <span>
+                            Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================================
+             PAGE CONTENT
+        ========================================= -->
+
+        <section class="page-content">
+
+
+            <div class="page-toolbar">
+
+
+                <div>
+
+                    <span class="panel-eyebrow">
+                        CLAIM MANAGEMENT
+                    </span>
+
+                    <h3>
+                        Insurance Claims
+                    </h3>
+
+                    <p>
+                        Review and manage submitted insurance claims.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    type="button"
+                    onclick="openClaimModal()"
+                >
+                    + New Claim
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 CLAIMS CARD
+            ========================================= -->
+
+            <div class="content-card">
+
+
+                <div class="card-header">
+
+
+                    <div>
+
+                        <h3>
+                            Claims Overview
+                        </h3>
+
+                        <p>
+                            Current claims registered in InsureFlow.
+                        </p>
+
+                    </div>
+
+
+                    <div class="search-box">
+
+                        <input
+                            type="text"
+                            id="claimSearch"
+                            placeholder="Search claims..."
+                            onkeyup="filterClaims()"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Claim Number
+                                </th>
+
+                                <th>
+                                    Policy Number
+                                </th>
+
+                                <th>
+                                    Claim Type
+                                </th>
+
+                                <th>
+                                    Amount
+                                </th>
+
+                                <th>
+                                    Claim Date
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="claimsTableBody">
+
+                            <tr>
+
+                                <td colspan="6">
+                                    Loading claims...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================
+     ADD CLAIM MODAL
+========================================= -->
+
+<div
+    id="claimModal"
+    class="modal-overlay"
+>
+
+    <div
+        class="claim-modal"
+        onclick="event.stopPropagation()"
+    >
+
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeClaimModal()"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <div class="claim-modal-header">
+
+            <span>
+                CLAIM MANAGEMENT
+            </span>
+
+            <h2>
+                File New Claim
+            </h2>
+
+            <p>
+                Register a new insurance claim against an existing policy.
+            </p>
+
+        </div>
+
+
+        <form
+            id="claimForm"
+            class="claim-form"
+        >
+
+
+            <div class="form-group">
+
+                <label for="claimNumber">
+
+                    Claim Number
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    id="claimNumber"
+                    placeholder="CLM-10001"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="claimPolicyNumber">
+
+                    Policy Number
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    id="claimPolicyNumber"
+                    placeholder="POL-10001"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="claimType">
+
+                    Claim Type
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <select
+                    id="claimType"
+                    required
+                >
+
+                    <option value="">
+                        Select claim type
+                    </option>
+
+                    <option value="Medical">
+                        Medical
+                    </option>
+
+                    <option value="Hospitalization">
+                        Hospitalization
+                    </option>
+
+                    <option value="Motor Accident">
+                        Motor Accident
+                    </option>
+
+                    <option value="Vehicle Damage">
+                        Vehicle Damage
+                    </option>
+
+                    <option value="Property Damage">
+                        Property Damage
+                    </option>
+
+                    <option value="Travel">
+                        Travel
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="claimAmount">
+
+                    Claim Amount
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="number"
+                    id="claimAmount"
+                    placeholder="50000"
+                    min="1"
+                    step="0.01"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label for="claimDate">
+
+                    Claim Date
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="date"
+                    id="claimDate"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="form-group full-width">
+
+                <label for="claimDescription">
+
+                    Description
+
+                </label>
+
+                <textarea
+                    id="claimDescription"
+                    placeholder="Describe the incident or reason for the claim..."
+                ></textarea>
+
+            </div>
+
+
+
+            <div
+                id="claimFormMessage"
+                class="form-message"
+            ></div>
+
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="modal-cancel"
+                    onclick="closeClaimModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    id="claimSubmitButton"
+                    class="modal-submit"
+                >
+                    Submit Claim
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+    /* =========================================
+       LOAD CLAIMS
+    ========================================= */
+
+    async function loadClaims() {
+
+        const tableBody =
+            document.getElementById(
+                "claimsTableBody"
+            );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/claims/"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load claims"
+                );
+
+            }
+
+
+            const claims =
+                await response.json();
+
+
+            tableBody.innerHTML = "";
+
+
+            if (claims.length === 0) {
+
+                tableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="empty-state"
+                        >
+                            No claims found.
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+            claims.forEach(
+                function (claim) {
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    row.innerHTML = `
+
+                        <td>
+
+                            <strong>
+                                ${escapeHtml(
+                                    claim.claim_number
+                                )}
+                            </strong>
+
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                claim.policy_number
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                claim.claim_type
+                            )}
+                        </td>
+
+                        <td>
+                            ₹${Number(
+                                claim.claim_amount
+                            ).toLocaleString("en-IN")}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                claim.claim_date
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge">
+
+                                ${escapeHtml(
+                                    claim.status ||
+                                    "Pending"
+                                )}
+
+                            </span>
+
+                        </td>
+
+                    `;
+
+
+                    tableBody.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Claims loading error:",
+                error
+            );
+
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="empty-state"
+                    >
+                        Unable to load claims.
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       SEARCH CLAIMS
+    ========================================= */
+
+    function filterClaims() {
+
+        const searchInput =
+            document.getElementById(
+                "claimSearch"
+            );
+
+
+        const searchValue =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+
+        const rows =
+            document.querySelectorAll(
+                "#claimsTableBody tr"
+            );
+
+
+        rows.forEach(
+            function (row) {
+
+                const text =
+                    row.textContent
+                        .toLowerCase();
+
+
+                row.style.display =
+                    text.includes(
+                        searchValue
+                    )
+                        ? ""
+                        : "none";
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================================
+       OPEN CLAIM MODAL
+    ========================================= */
+
+    function openClaimModal() {
+
+        const modal =
+            document.getElementById(
+                "claimModal"
+            );
+
+
+        modal.classList.add(
+            "show"
+        );
+
+
+        document
+            .getElementById(
+                "claimNumber"
+            )
+            .focus();
+
+
+        clearClaimMessage();
+
+    }
+
+
+
+    /* =========================================
+       CLOSE CLAIM MODAL
+    ========================================= */
+
+    function closeClaimModal() {
+
+        const modal =
+            document.getElementById(
+                "claimModal"
+            );
+
+
+        modal.classList.remove(
+            "show"
+        );
+
+
+        document
+            .getElementById(
+                "claimForm"
+            )
+            .reset();
+
+
+        clearClaimMessage();
+
+    }
+
+
+
+    /* =========================================
+       SUBMIT CLAIM
+    ========================================= */
+
+    document
+        .getElementById(
+            "claimForm"
+        )
+        .addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const submitButton =
+                    document.getElementById(
+                        "claimSubmitButton"
+                    );
+
+
+                const claimNumber =
+                    document
+                        .getElementById(
+                            "claimNumber"
+                        )
+                        .value
+                        .trim();
+
+
+                const policyNumber =
+                    document
+                        .getElementById(
+                            "claimPolicyNumber"
+                        )
+                        .value
+                        .trim();
+
+
+                const claimType =
+                    document
+                        .getElementById(
+                            "claimType"
+                        )
+                        .value;
+
+
+                const claimAmount =
+                    Number(
+                        document
+                            .getElementById(
+                                "claimAmount"
+                            )
+                            .value
+                    );
+
+
+                const claimDate =
+                    document
+                        .getElementById(
+                            "claimDate"
+                        )
+                        .value;
+
+
+                const description =
+                    document
+                        .getElementById(
+                            "claimDescription"
+                        )
+                        .value
+                        .trim();
+
+
+                if (
+                    !claimNumber ||
+                    !policyNumber ||
+                    !claimType ||
+                    !claimAmount ||
+                    !claimDate
+                ) {
+
+                    showClaimMessage(
+                        "Please complete all required fields.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    claimAmount <= 0
+                ) {
+
+                    showClaimMessage(
+                        "Claim amount must be greater than zero.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                submitButton.disabled =
+                    true;
+
+                submitButton.textContent =
+                    "Submitting...";
+
+
+                try {
+
+                    /*
+                     * The current FastAPI claims endpoint
+                     * accepts these values as query/form
+                     * parameters, so URLSearchParams is
+                     * used here.
+                     */
+
+                    const formData =
+                        new URLSearchParams();
+
+
+                    formData.append(
+                        "claim_number",
+                        claimNumber
+                    );
+
+
+                    formData.append(
+                        "policy_number",
+                        policyNumber
+                    );
+
+
+                    formData.append(
+                        "claim_type",
+                        claimType
+                    );
+
+
+                    formData.append(
+                        "claim_amount",
+                        claimAmount
+                    );
+
+
+                    formData.append(
+                        "claim_date",
+                        claimDate
+                    );
+
+
+                    if (description) {
+
+                        formData.append(
+                            "description",
+                            description
+                        );
+
+                    }
+
+
+                    const response =
+                        await fetch(
+                            "/api/claims/",
+                            {
+                                method:
+                                    "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded"
+                                },
+
+                                body:
+                                    formData
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        let errorMessage =
+                            "Unable to create claim.";
+
+
+                        if (
+                            result.detail
+                        ) {
+
+                            if (
+                                Array.isArray(
+                                    result.detail
+                                )
+                            ) {
+
+                                errorMessage =
+                                    result.detail
+                                        .map(
+                                            item =>
+                                                item.msg
+                                        )
+                                        .join(
+                                            ", "
+                                        );
+
+                            }
+
+                            else {
+
+                                errorMessage =
+                                    result.detail;
+
+                            }
+
+                        }
+
+
+                        throw new Error(
+                            errorMessage
+                        );
+
+                    }
+
+
+                    showClaimMessage(
+                        "Claim submitted successfully.",
+                        "success"
+                    );
+
+
+                    await loadClaims();
+
+
+                    setTimeout(
+                        function () {
+
+                            closeClaimModal();
+
+                        },
+                        900
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Claim creation error:",
+                        error
+                    );
+
+
+                    showClaimMessage(
+                        error.message ||
+                        "Unable to create claim.",
+                        "error"
+                    );
+
+                }
+
+                finally {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        "Submit Claim";
+
+                }
+
+            }
+        );
+
+
+
+    /* =========================================
+       CLAIM MESSAGE
+    ========================================= */
+
+    function showClaimMessage(
+        message,
+        type
+    ) {
+
+        const element =
+            document.getElementById(
+                "claimFormMessage"
+            );
+
+
+        element.textContent =
+            message;
+
+
+        element.className =
+            "form-message show " +
+            type;
+
+    }
+
+
+
+    function clearClaimMessage() {
+
+        const element =
+            document.getElementById(
+                "claimFormMessage"
+            );
+
+
+        element.textContent =
+            "";
+
+        element.className =
+            "form-message";
+
+    }
+
+
+
+    /* =========================================
+       HTML ESCAPE
+    ========================================= */
+
+    function escapeHtml(
+        value
+    ) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            value ?? "";
+
+
+        return div.innerHTML;
+
+    }
+
+
+
+    /* =========================================
+       CLOSE MODAL ON BACKDROP
+    ========================================= */
+
+    document
+        .getElementById(
+            "claimModal"
+        )
+        .addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeClaimModal();
+
+                }
+
+            }
+        );
+
+
+
+    /* =========================================
+       ESC KEY
+    ========================================= */
+
+    document
+        .addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeClaimModal();
+
+                }
+
+            }
+        );
+
+
+
+    /* =========================================
+       INITIAL LOAD
+    ========================================= */
+
+    loadClaims();
+
+
+</script>
+
+
+</body>
+
+</html>

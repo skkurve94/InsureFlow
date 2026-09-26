@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+```
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Sign In | InsureFlow</title>
+
+<style>
+
+    /* =====================================================
+       GLOBAL
+    ===================================================== */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family:
+            Inter,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+
+        min-height: 100vh;
+
+        background:
+            radial-gradient(
+                circle at 15% 20%,
+                rgba(41, 98, 255, 0.18),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 85% 80%,
+                rgba(0, 188, 212, 0.14),
+                transparent 30%
+            ),
+            #07111f;
+
+        color: #ffffff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 30px;
+    }
+
+
+    /* =====================================================
+       MAIN CONTAINER
+    ===================================================== */
+
+    .login-container {
+        width: 100%;
+        max-width: 1120px;
+        min-height: 650px;
+
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+
+        background: rgba(255, 255, 255, 0.07);
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        border-radius: 28px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 30px 80px rgba(0, 0, 0, 0.45);
+
+        backdrop-filter: blur(20px);
+    }
+
+
+    /* =====================================================
+       LEFT BRAND PANEL
+    ===================================================== */
+
+    .brand-panel {
+        position: relative;
+
+        padding: 60px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        background:
+            linear-gradient(
+                145deg,
+                #0d2340,
+                #0b1a2d 55%,
+                #07111f
+            );
+    }
+
+    .brand-panel::before {
+        content: "";
+
+        position: absolute;
+
+        width: 320px;
+        height: 320px;
+
+        border-radius: 50%;
+
+        background: rgba(41, 98, 255, 0.15);
+
+        top: -100px;
+        right: -100px;
+
+        filter: blur(5px);
+    }
+
+    .brand {
+        position: relative;
+        z-index: 2;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        margin-bottom: 65px;
+    }
+
+    .logo-icon {
+        width: 48px;
+        height: 48px;
+
+        border-radius: 14px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+            linear-gradient(
+                135deg,
+                #2f80ff,
+                #00bcd4
+            );
+
+        font-size: 23px;
+
+        box-shadow:
+            0 10px 30px rgba(47, 128, 255, 0.3);
+    }
+
+    .logo-name {
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .brand h1 {
+        position: relative;
+        z-index: 2;
+
+        font-size: 48px;
+        line-height: 1.1;
+
+        letter-spacing: -1.5px;
+
+        max-width: 470px;
+
+        margin-bottom: 24px;
+    }
+
+    .brand-description {
+        position: relative;
+        z-index: 2;
+
+        max-width: 460px;
+
+        color: #a9b8ca;
+
+        font-size: 16px;
+
+        line-height: 1.8;
+    }
+
+
+    /* =====================================================
+       TRUST ITEMS
+    ===================================================== */
+
+    .trust-list {
+        position: relative;
+        z-index: 2;
+
+        display: grid;
+        gap: 18px;
+    }
+
+    .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+
+        color: #cbd6e3;
+
+        font-size: 14px;
+    }
+
+    .trust-icon {
+        width: 34px;
+        height: 34px;
+
+        border-radius: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(255, 255, 255, 0.07);
+
+        color: #63d9e8;
+    }
+
+
+    /* =====================================================
+       LOGIN PANEL
+    ===================================================== */
+
+    .login-panel {
+        background: #ffffff;
+
+        color: #172033;
+
+        padding: 60px;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .login-content {
+        width: 100%;
+        max-width: 410px;
+
+        margin: auto;
+    }
+
+    .login-content h2 {
+        font-size: 34px;
+
+        letter-spacing: -0.8px;
+
+        margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+        color: #718096;
+
+        font-size: 15px;
+
+        margin-bottom: 38px;
+    }
+
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-label {
+        display: block;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        color: #344054;
+
+        margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .form-input {
+        width: 100%;
+
+        height: 52px;
+
+        border: 1px solid #d7dce5;
+
+        border-radius: 12px;
+
+        padding: 0 16px;
+
+        font-size: 15px;
+
+        outline: none;
+
+        transition:
+            border-color 0.2s,
+            box-shadow 0.2s;
+
+        background: #ffffff;
+    }
+
+    .form-input:focus {
+        border-color: #3578e5;
+
+        box-shadow:
+            0 0 0 4px rgba(53, 120, 229, 0.10);
+    }
+
+    .password-input {
+        padding-right: 52px;
+    }
+
+    .password-toggle {
+        position: absolute;
+
+        right: 14px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        border: none;
+
+        background: transparent;
+
+        cursor: pointer;
+
+        font-size: 17px;
+
+        color: #667085;
+    }
+
+
+    /* =====================================================
+       LOGIN BUTTON
+    ===================================================== */
+
+    .login-button {
+        width: 100%;
+
+        height: 54px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #246bce,
+                #1557b0
+            );
+
+        color: #ffffff;
+
+        font-size: 15px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+
+        box-shadow:
+            0 12px 25px rgba(36, 107, 206, 0.25);
+    }
+
+    .login-button:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 16px 30px rgba(36, 107, 206, 0.35);
+    }
+
+    .login-button:disabled {
+        opacity: 0.65;
+
+        cursor: not-allowed;
+
+        transform: none;
+    }
+
+
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
+
+    .message {
+        display: none;
+
+        margin-bottom: 20px;
+
+        padding: 12px 14px;
+
+        border-radius: 10px;
+
+        font-size: 13px;
+
+        line-height: 1.5;
+    }
+
+    .message.error {
+        display: block;
+
+        background: #fff1f2;
+
+        color: #b42318;
+
+        border: 1px solid #fecdd3;
+    }
+
+    .message.success {
+        display: block;
+
+        background: #ecfdf3;
+
+        color: #027a48;
+
+        border: 1px solid #abefc6;
+    }
+
+
+    /* =====================================================
+       REGISTER LINK
+    ===================================================== */
+
+    .register-section {
+        text-align: center;
+
+        margin-top: 28px;
+
+        color: #667085;
+
+        font-size: 14px;
+    }
+
+    .register-section a {
+        color: #246bce;
+
+        font-weight: 700;
+
+        text-decoration: none;
+    }
+
+    .register-section a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* =====================================================
+       SECURITY NOTE
+    ===================================================== */
+
+    .security-note {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 7px;
+
+        margin-top: 28px;
+
+        color: #98a2b3;
+
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 850px) {
+
+        .login-container {
+            grid-template-columns: 1fr;
+        }
+
+        .brand-panel {
+            display: none;
+        }
+
+        .login-panel {
+            padding: 45px 30px;
+        }
+
+    }
+
+    @media (max-width: 480px) {
+
+        body {
+            padding: 15px;
+        }
+
+        .login-container {
+            min-height: auto;
+
+            border-radius: 20px;
+        }
+
+        .login-panel {
+            padding: 35px 22px;
+        }
+
+        .login-content h2 {
+            font-size: 29px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="login-container">
+
+    <!-- =================================================
+         BRAND SIDE
+    ================================================== -->
+
+    <section class="brand-panel">
+
+        <div class="brand">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    🛡️
+                </div>
+
+                <div class="logo-name">
+                    InsureFlow
+                </div>
+
+            </div>
+
+
+            <h1>
+                Protection that
+                moves with you.
+            </h1>
+
+
+            <p class="brand-description">
+                Manage your insurance, policies and claims
+                through one simple and secure digital
+                experience.
+            </p>
+
+        </div>
+
+
+        <div class="trust-list">
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    ✓
+                </div>
+
+                Secure account access
+
+            </div>
+
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    ✓
+                </div>
+
+                Manage your policies online
+
+            </div>
+
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    ✓
+                </div>
+
+                Track claims in one place
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LOGIN SIDE
+    ================================================== -->
+
+    <section class="login-panel">
+
+        <div class="login-content">
+
+            <h2>
+                Welcome back
+            </h2>
+
+            <p class="login-subtitle">
+                Sign in to access your InsureFlow account.
+            </p>
+
+
+            <!-- Error / Success message -->
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+            <!-- Login form -->
+
+            <form id="loginForm">
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="email"
+                    >
+                        Email address
+                    </label>
+
+                    <input
+                        class="form-input"
+                        id="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="password"
+                    >
+                        Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input
+                            class="form-input password-input"
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Show password"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+                    Sign in
+                </button>
+
+            </form>
+
+
+            <!-- REGISTER -->
+
+            <div class="register-section">
+
+                Don't have an account?
+
+                <a href="/register">
+                    Create an account
+                </a>
+
+            </div>
+
+
+            <!-- SECURITY -->
+
+            <div class="security-note">
+
+                🔒 Secure account authentication
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const emailInput =
+        document.getElementById("email");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const passwordToggle =
+        document.getElementById("passwordToggle");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const message =
+        document.getElementById("message");
+
+
+    // =====================================================
+    // SHOW / HIDE PASSWORD
+    // =====================================================
+
+    passwordToggle.addEventListener(
+        "click",
+        function () {
+
+            if (
+                passwordInput.type === "password"
+            ) {
+
+                passwordInput.type = "text";
+
+                passwordToggle.textContent = "🙈";
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            } else {
+
+                passwordInput.type = "password";
+
+                passwordToggle.textContent = "👁";
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+            }
+
+        }
+    );
+
+
+    // =====================================================
+    // DISPLAY MESSAGE
+    // =====================================================
+
+    function showMessage(
+        text,
+        type
+    ) {
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+    }
+
+
+    // =====================================================
+    // LOGIN
+    // =====================================================
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const email =
+                emailInput.value.trim();
+
+            const password =
+                passwordInput.value;
+
+
+            // Disable button during request
+
+            loginButton.disabled = true;
+
+            loginButton.textContent =
+                "Signing in...";
+
+
+            message.className = "message";
+
+            message.textContent = "";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/auth/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                email: email,
+                                password: password
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // Login failed
+
+                if (!response.ok) {
+
+                    showMessage(
+                        data.detail ||
+                        "Unable to sign in. Please check your credentials.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                // =================================================
+                // LOGIN SUCCESSFUL
+                // =================================================
+
+                sessionStorage.setItem(
+                    "insureflow_token",
+                    data.access_token
+                );
+
+
+                sessionStorage.setItem(
+                    "insureflow_user",
+                    JSON.stringify(data.user)
+                );
+
+
+                showMessage(
+                    "Login successful. Redirecting...",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href = "/";
+
+                    },
+                    700
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Login error:",
+                    error
+                );
+
+                showMessage(
+                    "Unable to connect to InsureFlow. Please try again.",
+                    "error"
+                );
+
+            }
+
+            finally {
+
+                loginButton.disabled = false;
+
+                loginButton.textContent =
+                    "Sign in";
+
+            }
+
+        }
+    );
+
+</script>
+```
+
+</body>
+
+</html>

@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>InsureFlow | Policies</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/dashboard.css') }}"
+    >
+
+    <style>
+
+        /* =========================================
+           POLICY MODAL
+        ========================================= */
+
+        .modal-overlay {
+
+            position: fixed;
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(4, 14, 27, 0.72);
+
+            backdrop-filter:
+                blur(8px);
+
+            z-index: 9999;
+
+        }
+
+
+        .modal-overlay.show {
+
+            display: flex;
+
+        }
+
+
+        .policy-modal {
+
+            width:
+                min(620px, 100%);
+
+            max-height:
+                90vh;
+
+            overflow-y:
+                auto;
+
+            padding:
+                34px;
+
+            position: relative;
+
+            border:
+                1px solid
+                rgba(200, 163, 95, 0.35);
+
+            border-radius:
+                20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #faf8f2
+                );
+
+            box-shadow:
+                0 35px 90px
+                rgba(0, 0, 0, 0.30);
+
+        }
+
+
+        .policy-modal-header {
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .policy-modal-header span {
+
+            display: block;
+
+            margin-bottom:
+                7px;
+
+            color:
+                #c8a35f;
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .policy-modal-header h2 {
+
+            margin:
+                0 0 7px;
+
+            color:
+                #061426;
+
+            font-family:
+                "Manrope",
+                Arial,
+                sans-serif;
+
+            font-size:
+                24px;
+
+        }
+
+
+        .policy-modal-header p {
+
+            margin:
+                0;
+
+            color:
+                #657184;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .modal-close {
+
+            position:
+                absolute;
+
+            top:
+                18px;
+
+            right:
+                20px;
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            color:
+                #657184;
+
+            background:
+                #f0eee8;
+
+            font-size:
+                21px;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .modal-close:hover {
+
+            color:
+                #061426;
+
+            background:
+                #e5cb91;
+
+        }
+
+
+        .policy-form {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                18px;
+
+        }
+
+
+        .form-group {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .form-group.full-width {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .form-group label {
+
+            margin-bottom:
+                7px;
+
+            color:
+                #465366;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .form-group input,
+        .form-group select {
+
+            width:
+                100%;
+
+            height:
+                45px;
+
+            padding:
+                0 13px;
+
+            outline:
+                none;
+
+            border:
+                1px solid
+                #dcdfe3;
+
+            border-radius:
+                8px;
+
+            color:
+                #172333;
+
+            background:
+                #ffffff;
+
+            font-size:
+                12px;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus {
+
+            border-color:
+                #c8a35f;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(200, 163, 95, .12);
+
+        }
+
+
+        .modal-actions {
+
+            grid-column:
+                1 / -1;
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                10px;
+
+            margin-top:
+                8px;
+
+        }
+
+
+        .modal-cancel {
+
+            padding:
+                11px 18px;
+
+            border:
+                none;
+
+            border-radius:
+                8px;
+
+            color:
+                #596477;
+
+            background:
+                #eceef1;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .modal-submit {
+
+            padding:
+                11px 20px;
+
+            border:
+                1px solid
+                rgba(200, 163, 95, .35);
+
+            border-radius:
+                8px;
+
+            color:
+                #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b2946,
+                    #061426
+                );
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 8px 20px
+                rgba(6, 20, 38, .16);
+
+        }
+
+
+        .modal-submit:hover {
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .modal-submit:disabled {
+
+            opacity:
+                .6;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        .form-message {
+
+            grid-column:
+                1 / -1;
+
+            display:
+                none;
+
+            padding:
+                11px 13px;
+
+            border-radius:
+                8px;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .form-message.show {
+
+            display:
+                block;
+
+        }
+
+
+        .form-message.error {
+
+            color:
+                #a33d3d;
+
+            background:
+                #fff1f1;
+
+            border:
+                1px solid
+                #efcaca;
+
+        }
+
+
+        .form-message.success {
+
+            color:
+                #28785a;
+
+            background:
+                #edf7f1;
+
+            border:
+                1px solid
+                #d4ecdf;
+
+        }
+
+
+        .required {
+
+            color:
+                #b44d4d;
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .policy-modal {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .policy-form {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-group.full-width {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .modal-actions {
+
+                grid-column:
+                    auto;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                IF
+            </div>
+
+            <div>
+
+                <h2>
+                    InsureFlow
+                </h2>
+
+                <span>
+                    Insurance Platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a
+                href="/"
+                class="nav-item"
+            >
+
+                <span>▣</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/customers"
+                class="nav-item"
+            >
+
+                <span>◉</span>
+
+                Customers
+
+            </a>
+
+
+            <a
+                href="/policies"
+                class="nav-item active"
+            >
+
+                <span>▤</span>
+
+                Policies
+
+            </a>
+
+
+            <a
+                href="/claims"
+                class="nav-item"
+            >
+
+                <span>◇</span>
+
+                Claims
+
+            </a>
+
+
+            <a
+                href="/analytics"
+                class="nav-item"
+            >
+
+                <span>◈</span>
+
+                Analytics
+
+            </a>
+
+
+            <a
+                href="/settings"
+                class="nav-item"
+            >
+
+                <span>⚙</span>
+
+                Settings
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Operational
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="section-label">
+                    POLICY MANAGEMENT
+                </span>
+
+                <h1>
+                    Policies
+                </h1>
+
+                <p>
+                    Manage insurance policies and coverage.
+                </p>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    AU
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin User
+                    </strong>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================================
+             TOOLBAR
+        ========================================= -->
+
+        <section class="page-toolbar">
+
+            <div>
+
+                <h2>
+                    Policy Portfolio
+                </h2>
+
+                <p>
+                    View active and registered insurance policies.
+                </p>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                type="button"
+                onclick="openPolicyModal()"
+            >
+                + Add Policy
+            </button>
+
+        </section>
+
+
+
+        <!-- =========================================
+             POLICY TABLE
+        ========================================= -->
+
+        <section class="customer-table-card">
+
+            <div class="table-header">
+
+                <div>
+
+                    <h3>
+                        Registered Policies
+                    </h3>
+
+                    <p>
+                        Policy information from InsureFlow database
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="policySearch"
+                    class="search-box"
+                    placeholder="Search policies..."
+                >
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Policy Number
+                            </th>
+
+                            <th>
+                                Customer ID
+                            </th>
+
+                            <th>
+                                Policy Type
+                            </th>
+
+                            <th>
+                                Premium
+                            </th>
+
+                            <th>
+                                Coverage
+                            </th>
+
+                            <th>
+                                Start Date
+                            </th>
+
+                            <th>
+                                End Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="policyTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="loading"
+                            >
+                                Loading policies...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         ADD POLICY MODAL
+    ========================================= -->
+
+    <div
+        id="policyModal"
+        class="modal-overlay"
+    >
+
+        <div
+            class="policy-modal"
+            onclick="event.stopPropagation()"
+        >
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closePolicyModal()"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <div class="policy-modal-header">
+
+                <span>
+                    POLICY MANAGEMENT
+                </span>
+
+                <h2>
+                    Add New Policy
+                </h2>
+
+                <p>
+                    Register a new insurance policy and associate it
+                    with an existing customer.
+                </p>
+
+            </div>
+
+
+            <form
+                id="policyForm"
+                class="policy-form"
+            >
+
+
+                <div class="form-group">
+
+                    <label for="policyNumber">
+                        Policy Number
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="policyNumber"
+                        name="policy_number"
+                        placeholder="POL-10001"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="customerId">
+                        Customer ID
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customerId"
+                        name="customer_id"
+                        placeholder="CUS-10001"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="policyType">
+                        Policy Type
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="policyType"
+                        name="policy_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select policy type
+                        </option>
+
+                        <option value="Health Insurance">
+                            Health Insurance
+                        </option>
+
+                        <option value="Life Insurance">
+                            Life Insurance
+                        </option>
+
+                        <option value="Motor Insurance">
+                            Motor Insurance
+                        </option>
+
+                        <option value="Home Insurance">
+                            Home Insurance
+                        </option>
+
+                        <option value="Travel Insurance">
+                            Travel Insurance
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="premiumAmount">
+                        Premium Amount
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="premiumAmount"
+                        name="premium_amount"
+                        placeholder="25000"
+                        min="1"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="coverageAmount">
+                        Coverage Amount
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="coverageAmount"
+                        name="coverage_amount"
+                        placeholder="1000000"
+                        min="1"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="startDate">
+                        Start Date
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="startDate"
+                        name="start_date"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="endDate">
+                        End Date
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="endDate"
+                        name="end_date"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div
+                    id="policyFormMessage"
+                    class="form-message"
+                ></div>
+
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="modal-cancel"
+                        onclick="closePolicyModal()"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="policySubmitButton"
+                        class="modal-submit"
+                    >
+                        Create Policy
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+
+        /* =========================================
+           LOAD POLICIES
+        ========================================= */
+
+        async function loadPolicies() {
+
+            const tableBody =
+                document.getElementById(
+                    "policyTableBody"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/policies/"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load policies"
+                    );
+
+                }
+
+
+                const policies =
+                    await response.json();
+
+
+                tableBody.innerHTML = "";
+
+
+                if (policies.length === 0) {
+
+                    tableBody.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="empty"
+                            >
+                                No policies found.
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                policies.forEach(
+                    function (policy) {
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        row.innerHTML = `
+
+                            <td>
+                                <strong>
+                                    ${escapeHtml(
+                                        policy.policy_number
+                                    )}
+                                </strong>
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    policy.customer_id
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    policy.policy_type
+                                )}
+                            </td>
+
+                            <td>
+                                ₹${Number(
+                                    policy.premium_amount
+                                ).toLocaleString("en-IN")}
+                            </td>
+
+                            <td>
+                                ₹${Number(
+                                    policy.coverage_amount
+                                ).toLocaleString("en-IN")}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    policy.start_date
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    policy.end_date
+                                )}
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge">
+
+                                    ${escapeHtml(
+                                        policy.status || "Active"
+                                    )}
+
+                                </span>
+
+                            </td>
+
+                        `;
+
+
+                        tableBody.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Policy loading error:",
+                    error
+                );
+
+
+                tableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="error"
+                        >
+                            Unable to load policy data.
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =========================================
+           OPEN MODAL
+        ========================================= */
+
+        function openPolicyModal() {
+
+            const modal =
+                document.getElementById(
+                    "policyModal"
+                );
+
+
+            modal.classList.add(
+                "show"
+            );
+
+
+            document
+                .getElementById(
+                    "policyNumber"
+                )
+                .focus();
+
+
+            clearPolicyMessage();
+
+        }
+
+
+
+        /* =========================================
+           CLOSE MODAL
+        ========================================= */
+
+        function closePolicyModal() {
+
+            const modal =
+                document.getElementById(
+                    "policyModal"
+                );
+
+
+            modal.classList.remove(
+                "show"
+            );
+
+
+            document
+                .getElementById(
+                    "policyForm"
+                )
+                .reset();
+
+
+            clearPolicyMessage();
+
+        }
+
+
+
+        /* =========================================
+           POLICY FORM SUBMIT
+        ========================================= */
+
+        document
+            .getElementById(
+                "policyForm"
+            )
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    const submitButton =
+                        document.getElementById(
+                            "policySubmitButton"
+                        );
+
+
+                    const form =
+                        event.target;
+
+
+                    const policyData = {
+
+                        policy_number:
+                            document
+                                .getElementById(
+                                    "policyNumber"
+                                )
+                                .value
+                                .trim(),
+
+                        customer_id:
+                            document
+                                .getElementById(
+                                    "customerId"
+                                )
+                                .value
+                                .trim(),
+
+                        policy_type:
+                            document
+                                .getElementById(
+                                    "policyType"
+                                )
+                                .value,
+
+                        premium_amount:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "premiumAmount"
+                                    )
+                                    .value
+                            ),
+
+                        coverage_amount:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "coverageAmount"
+                                    )
+                                    .value
+                            ),
+
+                        start_date:
+                            document
+                                .getElementById(
+                                    "startDate"
+                                )
+                                .value,
+
+                        end_date:
+                            document
+                                .getElementById(
+                                    "endDate"
+                                )
+                                .value
+
+                    };
+
+
+                    if (
+                        !policyData.policy_number ||
+                        !policyData.customer_id ||
+                        !policyData.policy_type ||
+                        !policyData.premium_amount ||
+                        !policyData.coverage_amount ||
+                        !policyData.start_date ||
+                        !policyData.end_date
+                    ) {
+
+                        showPolicyMessage(
+                            "Please complete all required fields.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        policyData.premium_amount <= 0 ||
+                        policyData.coverage_amount <= 0
+                    ) {
+
+                        showPolicyMessage(
+                            "Premium and coverage must be greater than zero.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        policyData.coverage_amount <
+                        policyData.premium_amount
+                    ) {
+
+                        showPolicyMessage(
+                            "Coverage amount should be greater than the premium amount.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        policyData.end_date <=
+                        policyData.start_date
+                    ) {
+
+                        showPolicyMessage(
+                            "End date must be after the start date.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    submitButton.disabled =
+                        true;
+
+                    submitButton.textContent =
+                        "Creating...";
+
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                "/api/policies/",
+                                {
+                                    method:
+                                        "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body:
+                                        JSON.stringify(
+                                            policyData
+                                        )
+                                }
+                            );
+
+
+                        const result =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            let errorMessage =
+                                "Unable to create policy.";
+
+
+                            if (
+                                result.detail
+                            ) {
+
+                                if (
+                                    Array.isArray(
+                                        result.detail
+                                    )
+                                ) {
+
+                                    errorMessage =
+                                        result.detail
+                                            .map(
+                                                item =>
+                                                    item.msg
+                                            )
+                                            .join(
+                                                ", "
+                                            );
+
+                                }
+
+                                else {
+
+                                    errorMessage =
+                                        result.detail;
+
+                                }
+
+                            }
+
+
+                            throw new Error(
+                                errorMessage
+                            );
+
+                        }
+
+
+                        showPolicyMessage(
+                            "Policy created successfully.",
+                            "success"
+                        );
+
+
+                        await loadPolicies();
+
+
+                        setTimeout(
+                            function () {
+
+                                closePolicyModal();
+
+                            },
+                            900
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Policy creation error:",
+                            error
+                        );
+
+
+                        showPolicyMessage(
+                            error.message ||
+                            "Unable to create policy.",
+                            "error"
+                        );
+
+                    }
+
+                    finally {
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.textContent =
+                            "Create Policy";
+
+                    }
+
+                }
+            );
+
+
+
+        /* =========================================
+           POLICY SEARCH
+        ========================================= */
+
+        document
+            .getElementById(
+                "policySearch"
+            )
+            .addEventListener(
+                "input",
+                function () {
+
+                    const search =
+                        this.value
+                            .toLowerCase()
+                            .trim();
+
+
+                    const rows =
+                        document.querySelectorAll(
+                            "#policyTableBody tr"
+                        );
+
+
+                    rows.forEach(
+                        function (row) {
+
+                            const text =
+                                row.textContent
+                                    .toLowerCase();
+
+
+                            row.style.display =
+                                text.includes(
+                                    search
+                                )
+                                    ? ""
+                                    : "none";
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        function showPolicyMessage(
+            message,
+            type
+        ) {
+
+            const element =
+                document.getElementById(
+                    "policyFormMessage"
+                );
+
+
+            element.textContent =
+                message;
+
+
+            element.className =
+                "form-message show " +
+                type;
+
+        }
+
+
+
+        function clearPolicyMessage() {
+
+            const element =
+                document.getElementById(
+                    "policyFormMessage"
+                );
+
+
+            element.textContent =
+                "";
+
+            element.className =
+                "form-message";
+
+        }
+
+
+
+        /* =========================================
+           HTML ESCAPE
+        ========================================= */
+
+        function escapeHtml(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value ?? "";
+
+
+            return div.innerHTML;
+
+        }
+
+
+
+        /* =========================================
+           CLOSE MODAL ON BACKDROP CLICK
+        ========================================= */
+
+        document
+            .getElementById(
+                "policyModal"
+            )
+            .addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closePolicyModal();
+
+                    }
+
+                }
+            );
+
+
+
+        /* =========================================
+           ESC KEY
+        ========================================= */
+
+        document
+            .addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+                        closePolicyModal();
+
+                    }
+
+                }
+            );
+
+
+
+        /* =========================================
+           INITIAL LOAD
+        ========================================= */
+
+        loadPolicies();
+
+
+    </script>
+
+
+</body>
+
+</html>

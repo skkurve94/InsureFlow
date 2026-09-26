@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Account Settings | InsureFlow</title>
+
+    <link rel="stylesheet" href="/static/css/settings.css">
+</head>
+
+<body>
+
+<div class="page-shell">
+
+    <!-- TOP NAVIGATION -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-symbol">IF</div>
+
+            <div class="brand-name">
+                <strong>InsureFlow</strong>
+                <span>Insurance</span>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+
+            <a href="/">Home</a>
+
+            <a href="/policies">My Policies</a>
+
+            <a href="/claims">Claims</a>
+
+            <a href="/analytics">Payments</a>
+
+            <a href="/settings" class="active">
+                Account
+            </a>
+
+        </nav>
+
+        <div class="top-actions">
+
+            <button
+                class="support-button"
+                onclick="openSupport()"
+            >
+                Need help?
+            </button>
+
+            <button
+                class="profile-button"
+                onclick="scrollToProfile()"
+            >
+                <span id="topInitials">SK</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- PAGE CONTENT -->
+    <main class="content">
+
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb">
+            <span>Account</span>
+            <span class="separator">/</span>
+            <span>Settings</span>
+        </div>
+
+
+        <!-- PROFILE HERO -->
+        <section class="profile-hero">
+
+            <div class="hero-left">
+
+                <div
+                    class="large-avatar"
+                    id="largeInitials"
+                >
+                    SK
+                </div>
+
+                <div class="hero-information">
+
+                    <span class="eyebrow">
+                        MY ACCOUNT
+                    </span>
+
+                    <h1 id="profileName">
+                        Sagar K
+                    </h1>
+
+                    <p id="profileEmail">
+                        sagar@example.com
+                    </p>
+
+                    <div class="member-info">
+
+                        <span class="member-dot"></span>
+
+                        <span>
+                            InsureFlow customer
+                        </span>
+
+                        <span class="member-divider"></span>
+
+                        <span>
+                            Member since 2026
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="edit-profile-button"
+                onclick="openProfileEditor()"
+            >
+                Edit profile
+            </button>
+
+        </section>
+
+
+        <!-- ACCOUNT NAVIGATION -->
+        <div class="account-tabs">
+
+            <button
+                class="account-tab active"
+                onclick="showSection('personal', this)"
+            >
+                Personal details
+            </button>
+
+            <button
+                class="account-tab"
+                onclick="showSection('security', this)"
+            >
+                Security
+            </button>
+
+            <button
+                class="account-tab"
+                onclick="showSection('notifications', this)"
+            >
+                Notifications
+            </button>
+
+            <button
+                class="account-tab"
+                onclick="showSection('privacy', this)"
+            >
+                Privacy
+            </button>
+
+        </div>
+
+
+        <!-- PERSONAL SECTION -->
+        <section
+            id="personal"
+            class="settings-section active-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-kicker">
+                        PROFILE
+                    </span>
+
+                    <h2>Personal details</h2>
+
+                    <p>
+                        Keep your contact information up to date
+                        so we can reach you when it matters.
+                    </p>
+                </div>
+
+                <button
+                    class="text-button"
+                    onclick="openProfileEditor()"
+                >
+                    Edit details
+                </button>
+
+            </div>
+
+
+            <div class="information-card">
+
+                <div class="information-row">
+
+                    <div class="information-label">
+                        <span>Full name</span>
+                    </div>
+
+                    <div
+                        class="information-value"
+                        id="detailsName"
+                    >
+                        Sagar K
+                    </div>
+
+                </div>
+
+
+                <div class="information-row">
+
+                    <div class="information-label">
+                        <span>Email address</span>
+                    </div>
+
+                    <div
+                        class="information-value"
+                        id="detailsEmail"
+                    >
+                        sagar@example.com
+                    </div>
+
+                </div>
+
+
+                <div class="information-row">
+
+                    <div class="information-label">
+                        <span>Mobile number</span>
+                    </div>
+
+                    <div
+                        class="information-value"
+                        id="detailsPhone"
+                    >
+                        Not provided
+                    </div>
+
+                </div>
+
+
+                <div class="information-row">
+
+                    <div class="information-label">
+                        <span>Account type</span>
+                    </div>
+
+                    <div class="information-value">
+
+                        <span class="account-badge">
+                            Customer
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT CARD -->
+            <div class="simple-card">
+
+                <div class="card-copy">
+
+                    <span class="card-label">
+                        CONTACT PREFERENCES
+                    </span>
+
+                    <h3>
+                        How should we contact you?
+                    </h3>
+
+                    <p>
+                        Choose how you would like to receive
+                        important policy and account updates.
+                    </p>
+
+                </div>
+
+                <button
+                    class="outline-button"
+                    onclick="showSection('notifications', null)"
+                >
+                    Manage preferences
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECURITY SECTION -->
+        <section
+            id="security"
+            class="settings-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        SECURITY
+                    </span>
+
+                    <h2>
+                        Keep your account secure
+                    </h2>
+
+                    <p>
+                        Manage your password and account access.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="security-list">
+
+                <div class="security-item">
+
+                    <div class="security-icon">
+                        •
+                    </div>
+
+                    <div class="security-copy">
+
+                        <h3>Password</h3>
+
+                        <p>
+                            Change your password regularly to
+                            help protect your account.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="outline-button"
+                        onclick="openPasswordModal()"
+                    >
+                        Change password
+                    </button>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <div class="security-icon">
+                        ✓
+                    </div>
+
+                    <div class="security-copy">
+
+                        <h3>Account protection</h3>
+
+                        <p>
+                            Your account is protected with
+                            password-based authentication.
+                        </p>
+
+                    </div>
+
+                    <span class="protected-label">
+                        Protected
+                    </span>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <div class="security-icon">
+                        →
+                    </div>
+
+                    <div class="security-copy">
+
+                        <h3>Sign out</h3>
+
+                        <p>
+                            Sign out of your InsureFlow account
+                            on this device.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="outline-button"
+                        onclick="logoutUser()"
+                    >
+                        Sign out
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+        <section
+            id="notifications"
+            class="settings-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        COMMUNICATION
+                    </span>
+
+                    <h2>
+                        Notifications
+                    </h2>
+
+                    <p>
+                        Choose the updates that are important
+                        to you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="preference-card">
+
+                <div class="preference-row">
+
+                    <div>
+
+                        <h3>
+                            Policy updates
+                        </h3>
+
+                        <p>
+                            Receive reminders about policy
+                            renewals and important changes.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div>
+
+                        <h3>
+                            Claim updates
+                        </h3>
+
+                        <p>
+                            Get notified when your claim status
+                            changes.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div>
+
+                        <h3>
+                            Payment reminders
+                        </h3>
+
+                        <p>
+                            Receive reminders before scheduled
+                            premium payments.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="preference-row">
+
+                    <div>
+
+                        <h3>
+                            Offers and updates
+                        </h3>
+
+                        <p>
+                            Receive occasional information about
+                            products and services.
+                        </p>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRIVACY -->
+        <section
+            id="privacy"
+            class="settings-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        PRIVACY
+                    </span>
+
+                    <h2>
+                        Privacy and account
+                    </h2>
+
+                    <p>
+                        Manage your account information and
+                        preferences.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="privacy-card">
+
+                <div class="privacy-row">
+
+                    <div>
+
+                        <h3>
+                            Your information
+                        </h3>
+
+                        <p>
+                            Your personal information is used to
+                            provide and manage your insurance
+                            services.
+                        </p>
+
+                    </div>
+
+                    <span class="privacy-status">
+                        Secure
+                    </span>
+
+                </div>
+
+
+                <div class="privacy-row danger-row">
+
+                    <div>
+
+                        <h3>
+                            Delete account
+                        </h3>
+
+                        <p>
+                            Permanently remove your InsureFlow
+                            account and associated access.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="danger-button"
+                        onclick="deleteAccount()"
+                    >
+                        Delete account
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="account-footer">
+
+            <div>
+
+                <strong>
+                    InsureFlow
+                </strong>
+
+                <span>
+                    Insurance made simpler.
+                </span>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#">
+                    Help
+                </a>
+
+                <a href="#">
+                    Privacy
+                </a>
+
+                <a href="#">
+                    Terms
+                </a>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- EDIT PROFILE MODAL -->
+<div
+    id="profileModal"
+    class="modal-overlay"
+>
+
+    <div class="modal">
+
+        <button
+            class="modal-close"
+            onclick="closeProfileEditor()"
+        >
+            ×
+        </button>
+
+        <span class="section-kicker">
+            YOUR PROFILE
+        </span>
+
+        <h2>
+            Edit personal details
+        </h2>
+
+        <p class="modal-description">
+            Update your information below.
+        </p>
+
+
+        <label>
+            Full name
+        </label>
+
+        <input
+            type="text"
+            id="editName"
+        >
+
+
+        <label>
+            Phone number
+        </label>
+
+        <input
+            type="text"
+            id="editPhone"
+        >
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel-button"
+                onclick="closeProfileEditor()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-button"
+                onclick="saveProfile()"
+            >
+                Save changes
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PASSWORD MODAL -->
+<div
+    id="passwordModal"
+    class="modal-overlay"
+>
+
+    <div class="modal">
+
+        <button
+            class="modal-close"
+            onclick="closePasswordModal()"
+        >
+            ×
+        </button>
+
+        <span class="section-kicker">
+            ACCOUNT SECURITY
+        </span>
+
+        <h2>
+            Change password
+        </h2>
+
+        <p class="modal-description">
+            Choose a strong password that you do not use
+            elsewhere.
+        </p>
+
+
+        <label>
+            Current password
+        </label>
+
+        <input
+            type="password"
+            id="currentPassword"
+        >
+
+
+        <label>
+            New password
+        </label>
+
+        <input
+            type="password"
+            id="newPassword"
+        >
+
+
+        <label>
+            Confirm new password
+        </label>
+
+        <input
+            type="password"
+            id="confirmPassword"
+        >
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel-button"
+                onclick="closePasswordModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-button"
+                onclick="savePassword()"
+            >
+                Update password
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function getToken() {
+
+    return sessionStorage.getItem(
+        "insureflow_token"
+    );
+
+}
+
+
+function getStoredUser() {
+
+    const data =
+        sessionStorage.getItem(
+            "insureflow_user"
+        );
+
+    if (!data) {
+        return null;
+    }
+
+    try {
+
+        return JSON.parse(data);
+
+    } catch (error) {
+
+        console.error(error);
+
+        return null;
+
+    }
+
+}
+
+
+function loadUserData() {
+
+    const user = getStoredUser();
+
+    if (!user) {
+
+        window.location.href = "/login";
+
+        return;
+
+    }
+
+
+    const name =
+        user.full_name ||
+        "InsureFlow Customer";
+
+    const email =
+        user.email ||
+        "Not provided";
+
+    const phone =
+        user.phone ||
+        "Not provided";
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "profileEmail"
+    ).textContent = email;
+
+
+    document.getElementById(
+        "detailsName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "detailsEmail"
+    ).textContent = email;
+
+
+    document.getElementById(
+        "detailsPhone"
+    ).textContent = phone;
+
+
+    document.getElementById(
+        "editName"
+    ).value = name;
+
+
+    document.getElementById(
+        "editPhone"
+    ).value =
+        phone === "Not provided"
+            ? ""
+            : phone;
+
+
+    const initials =
+        name
+            .split(" ")
+            .filter(Boolean)
+            .map(
+                part =>
+                    part
+                        .charAt(0)
+                        .toUpperCase()
+            )
+            .slice(0, 2)
+            .join("");
+
+
+    document.getElementById(
+        "largeInitials"
+    ).textContent = initials;
+
+
+    document.getElementById(
+        "topInitials"
+    ).textContent = initials;
+
+}
+
+
+function showSection(
+    sectionId,
+    clickedButton
+) {
+
+    document
+        .querySelectorAll(
+            ".settings-section"
+        )
+        .forEach(section => {
+
+            section.classList.remove(
+                "active-section"
+            );
+
+        });
+
+
+    const selectedSection =
+        document.getElementById(
+            sectionId
+        );
+
+
+    if (selectedSection) {
+
+        selectedSection.classList.add(
+            "active-section"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".account-tab"
+        )
+        .forEach(tab => {
+
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if (clickedButton) {
+
+        clickedButton.classList.add(
+            "active"
+        );
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function openProfileEditor() {
+
+    loadUserData();
+
+    document
+        .getElementById(
+            "profileModal"
+        )
+        .classList.add("show");
+
+}
+
+
+function closeProfileEditor() {
+
+    document
+        .getElementById(
+            "profileModal"
+        )
+        .classList.remove("show");
+
+}
+
+
+async function saveProfile() {
+
+    const name =
+        document
+            .getElementById(
+                "editName"
+            )
+            .value
+            .trim();
+
+
+    const phone =
+        document
+            .getElementById(
+                "editPhone"
+            )
+            .value
+            .trim();
+
+
+    if (name.length < 2) {
+
+        alert(
+            "Please enter your full name."
+        );
+
+        return;
+
+    }
+
+
+    const token = getToken();
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/auth/profile",
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    },
+
+                    body:
+                        new URLSearchParams({
+                            full_name: name,
+                            phone: phone
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Unable to update profile."
+            );
+
+        }
+
+
+        sessionStorage.setItem(
+            "insureflow_user",
+            JSON.stringify(
+                data.user
+            )
+        );
+
+
+        loadUserData();
+
+        closeProfileEditor();
+
+        showMessage(
+            "Your profile has been updated successfully."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+function openPasswordModal() {
+
+    document
+        .getElementById(
+            "passwordModal"
+        )
+        .classList.add("show");
+
+}
+
+
+function closePasswordModal() {
+
+    document
+        .getElementById(
+            "passwordModal"
+        )
+        .classList.remove("show");
+
+
+    document
+        .getElementById(
+            "currentPassword"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "newPassword"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "confirmPassword"
+        )
+        .value = "";
+
+}
+
+
+async function savePassword() {
+
+    const currentPassword =
+        document
+            .getElementById(
+                "currentPassword"
+            )
+            .value;
+
+
+    const newPassword =
+        document
+            .getElementById(
+                "newPassword"
+            )
+            .value;
+
+
+    const confirmPassword =
+        document
+            .getElementById(
+                "confirmPassword"
+            )
+            .value;
+
+
+    if (
+        !currentPassword ||
+        !newPassword ||
+        !confirmPassword
+    ) {
+
+        alert(
+            "Please complete all password fields."
+        );
+
+        return;
+
+    }
+
+
+    if (newPassword.length < 8) {
+
+        alert(
+            "New password must contain at least 8 characters."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        newPassword !==
+        confirmPassword
+    ) {
+
+        alert(
+            "New passwords do not match."
+        );
+
+        return;
+
+    }
+
+
+    const token = getToken();
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/auth/password",
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    },
+
+                    body:
+                        new URLSearchParams({
+                            current_password:
+                                currentPassword,
+
+                            new_password:
+                                newPassword
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Unable to change password."
+            );
+
+        }
+
+
+        closePasswordModal();
+
+
+        showMessage(
+            "Your password has been changed successfully."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+function logoutUser() {
+
+    sessionStorage.removeItem(
+        "insureflow_token"
+    );
+
+    sessionStorage.removeItem(
+        "insureflow_user"
+    );
+
+
+    window.location.href =
+        "/login";
+
+}
+
+
+async function deleteAccount() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to permanently delete your InsureFlow account?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const token = getToken();
+
+
+    if (!token) {
+
+        window.location.href =
+            "/login";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/auth/account",
+                {
+                    method: "DELETE",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Unable to delete account."
+            );
+
+        }
+
+
+        sessionStorage.removeItem(
+            "insureflow_token"
+        );
+
+        sessionStorage.removeItem(
+            "insureflow_user"
+        );
+
+
+        alert(
+            "Your InsureFlow account has been deleted."
+        );
+
+
+        window.location.href =
+            "/login";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+function openSupport() {
+
+    window.location.href =
+        "/support";
+
+}
+
+
+function showMessage(message) {
+
+    const existing =
+        document.querySelector(
+            ".success-message"
+        );
+
+
+    if (existing) {
+        existing.remove();
+    }
+
+
+    const notification =
+        document.createElement(
+            "div"
+        );
+
+
+    notification.className =
+        "success-message";
+
+
+    notification.textContent =
+        message;
+
+
+    document.body.appendChild(
+        notification
+    );
+
+
+    setTimeout(
+        () => {
+
+            notification.classList.add(
+                "hide"
+            );
+
+            setTimeout(
+                () => {
+                    notification.remove();
+                },
+                300
+            );
+
+        },
+        3000
+    );
+
+}
+
+
+window.addEventListener(
+    "DOMContentLoaded",
+    loadUserData
+);
+
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target.classList.contains(
+                "modal-overlay"
+            )
+        ) {
+
+            event.target.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>InsureFlow | Analytics</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/dashboard.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                IF
+            </div>
+
+            <div>
+                <h2>InsureFlow</h2>
+
+                <span>
+                    Insurance Platform
+                </span>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="/" class="nav-item">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="/customers" class="nav-item">
+                <span>◉</span>
+                Customers
+            </a>
+
+            <a href="/policies" class="nav-item">
+                <span>▤</span>
+                Policies
+            </a>
+
+            <a href="/claims" class="nav-item">
+                <span>◇</span>
+                Claims
+            </a>
+
+            <a href="/analytics" class="nav-item active">
+                <span>◈</span>
+                Analytics
+            </a>
+
+            <a href="/settings" class="nav-item">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Operational
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="section-label">
+                    BUSINESS INTELLIGENCE
+                </span>
+
+                <h1>
+                    Analytics
+                </h1>
+
+                <p>
+                    Monitor your insurance portfolio.
+                </p>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    AU
+                </div>
+
+                <div>
+
+                    <strong>
+                        Admin User
+                    </strong>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <section class="page-toolbar">
+
+            <div>
+
+                <h2>
+                    Portfolio Overview
+                </h2>
+
+                <p>
+                    Real-time metrics from the InsureFlow database.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total Customers
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalCustomers"
+                >
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Registered customers
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total Policies
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalPolicies"
+                >
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Insurance policies
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Active Policies
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="activePolicies"
+                >
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Currently active
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total Claims
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalClaims"
+                >
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Submitted claims
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="analytics-grid">
+
+
+            <div class="customer-table-card">
+
+                <div class="table-header">
+
+                    <div>
+
+                        <h3>
+                            Policy Distribution
+                        </h3>
+
+                        <p>
+                            Policies grouped by insurance type.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="policyDistribution"
+                    class="analytics-list"
+                >
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+
+
+            <div class="customer-table-card">
+
+                <div class="table-header">
+
+                    <div>
+
+                        <h3>
+                            Claims Overview
+                        </h3>
+
+                        <p>
+                            Claims grouped by status.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="claimDistribution"
+                    class="analytics-list"
+                >
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+        async function loadAnalytics() {
+
+            try {
+
+                const [
+                    customersResponse,
+                    policiesResponse,
+                    claimsResponse
+                ] = await Promise.all([
+
+                    fetch("/api/customers/"),
+
+                    fetch("/api/policies/"),
+
+                    fetch("/api/claims/")
+
+                ]);
+
+
+                if (
+                    !customersResponse.ok ||
+                    !policiesResponse.ok ||
+                    !claimsResponse.ok
+                ) {
+
+                    throw new Error(
+                        "Unable to load analytics"
+                    );
+
+                }
+
+
+                const customers =
+                    await customersResponse.json();
+
+                const policies =
+                    await policiesResponse.json();
+
+                const claims =
+                    await claimsResponse.json();
+
+
+                document.getElementById(
+                    "totalCustomers"
+                ).textContent =
+                    customers.length;
+
+
+                document.getElementById(
+                    "totalPolicies"
+                ).textContent =
+                    policies.length;
+
+
+                const activePolicies =
+                    policies.filter(
+                        policy =>
+                            policy.status === "Active"
+                    );
+
+
+                document.getElementById(
+                    "activePolicies"
+                ).textContent =
+                    activePolicies.length;
+
+
+                document.getElementById(
+                    "totalClaims"
+                ).textContent =
+                    claims.length;
+
+
+
+                const policyGroups = {};
+
+
+                policies.forEach(policy => {
+
+                    const type =
+                        policy.policy_type ||
+                        "Other";
+
+
+                    policyGroups[type] =
+                        (policyGroups[type] || 0) + 1;
+
+                });
+
+
+                const policyContainer =
+                    document.getElementById(
+                        "policyDistribution"
+                    );
+
+
+                policyContainer.innerHTML = "";
+
+
+                if (Object.keys(policyGroups).length === 0) {
+
+                    policyContainer.innerHTML =
+                        "<p>No policy data available.</p>";
+
+                }
+                else {
+
+                    Object.entries(
+                        policyGroups
+                    ).forEach(
+                        ([type, count]) => {
+
+                            const item =
+                                document.createElement(
+                                    "div"
+                                );
+
+                            item.className =
+                                "analytics-row";
+
+
+                            item.innerHTML = `
+
+                                <span>
+                                    ${type}
+                                </span>
+
+                                <strong>
+                                    ${count}
+                                </strong>
+
+                            `;
+
+
+                            policyContainer.appendChild(
+                                item
+                            );
+
+                        }
+                    );
+
+                }
+
+
+
+                const claimGroups = {};
+
+
+                claims.forEach(claim => {
+
+                    const status =
+                        claim.status ||
+                        "Pending";
+
+
+                    claimGroups[status] =
+                        (claimGroups[status] || 0) + 1;
+
+                });
+
+
+                const claimContainer =
+                    document.getElementById(
+                        "claimDistribution"
+                    );
+
+
+                claimContainer.innerHTML = "";
+
+
+                if (Object.keys(claimGroups).length === 0) {
+
+                    claimContainer.innerHTML =
+                        "<p>No claim data available.</p>";
+
+                }
+                else {
+
+                    Object.entries(
+                        claimGroups
+                    ).forEach(
+                        ([status, count]) => {
+
+                            const item =
+                                document.createElement(
+                                    "div"
+                                );
+
+                            item.className =
+                                "analytics-row";
+
+
+                            item.innerHTML = `
+
+                                <span>
+                                    ${status}
+                                </span>
+
+                                <strong>
+                                    ${count}
+                                </strong>
+
+                            `;
+
+
+                            claimContainer.appendChild(
+                                item
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+
+
+            catch (error) {
+
+                console.error(error);
+
+                document.getElementById(
+                    "totalCustomers"
+                ).textContent = "—";
+
+                document.getElementById(
+                    "totalPolicies"
+                ).textContent = "—";
+
+                document.getElementById(
+                    "activePolicies"
+                ).textContent = "—";
+
+                document.getElementById(
+                    "totalClaims"
+                ).textContent = "—";
+
+            }
+
+        }
+
+
+        loadAnalytics();
+
+    </script>
+
+
+</body>
+
+</html>

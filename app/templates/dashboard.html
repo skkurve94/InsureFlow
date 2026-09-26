@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>InsureFlow | Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/dashboard.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app-shell">
+
+
+    <!-- ========================================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                IF
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    InsureFlow
+                </h1>
+
+                <span>
+                    Insurance Platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a
+                href="/"
+                class="nav-item active"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="/customers"
+                class="nav-item"
+            >
+                <span class="nav-icon">♙</span>
+                <span>Customers</span>
+            </a>
+
+
+            <a
+                href="/policies"
+                class="nav-item"
+            >
+                <span class="nav-icon">▣</span>
+                <span>Policies</span>
+            </a>
+
+
+            <a
+                href="/claims"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                <span>Claims</span>
+            </a>
+
+
+            <a
+                href="/analytics"
+                class="nav-item"
+            >
+                <span class="nav-icon">◉</span>
+                <span>Analytics</span>
+            </a>
+
+
+            <a
+                href="/settings"
+                class="nav-item"
+            >
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        System Secure
+                    </strong>
+
+                    <small>
+                        All services operational
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="version">
+                InsureFlow v1.0.0
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ========================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================================= -->
+
+    <main class="main-content">
+
+
+        <!-- ===================================== -->
+        <!-- TOP BAR -->
+        <!-- ===================================== -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="eyebrow">
+                    INSURANCE OPERATIONS
+                </span>
+
+                <h2>
+                    Dashboard
+                </h2>
+
+                <p>
+                    Monitor your insurance portfolio
+                    and business activity.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    class="notification-button"
+                    onclick="showNotification()"
+                    aria-label="Notifications"
+                >
+
+                    🔔
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="profile-button"
+                    onclick="openProfile()"
+                >
+
+                    <span
+                        class="avatar"
+                        id="userAvatar"
+                    >
+                        SK
+                    </span>
+
+
+                    <span class="profile-details">
+
+                        <strong id="userName">
+                            Customer
+                        </strong>
+
+                        <small id="userRole">
+                            Customer
+                        </small>
+
+                    </span>
+
+
+                    <span class="profile-arrow">
+                        ▾
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ===================================== -->
+        <!-- WELCOME -->
+        <!-- ===================================== -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <span class="section-label">
+                    INSUREFLOW CONTROL CENTER
+                </span>
+
+                <h1>
+
+                    Welcome back,
+
+                    <span id="welcomeName">
+                        Customer
+                    </span>
+
+                    👋
+
+                </h1>
+
+                <p>
+
+                    Manage your insurance portfolio,
+                    policies, claims and account activity
+                    from one centralized platform.
+
+                </p>
+
+            </div>
+
+
+            <a
+                href="/policies"
+                class="primary-button"
+            >
+
+                View My Policies
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+        </section>
+
+
+
+        <!-- ===================================== -->
+        <!-- STATISTICS -->
+        <!-- ===================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-title">
+                        Total Customers
+                    </span>
+
+                    <span class="stat-icon customer-icon">
+                        ♙
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="customerCount"
+                >
+                    —
+                </div>
+
+
+                <div class="stat-description">
+                    ● Registered customers
+                </div>
+
+            </div>
+
+
+
+            <!-- POLICIES -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-title">
+                        Active Policies
+                    </span>
+
+                    <span class="stat-icon policy-icon">
+                        ▣
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="policyCount"
+                >
+                    —
+                </div>
+
+
+                <div class="stat-description">
+                    ● Active insurance policies
+                </div>
+
+            </div>
+
+
+
+            <!-- CLAIMS -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-title">
+                        Total Claims
+                    </span>
+
+                    <span class="stat-icon claim-icon">
+                        ◈
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="claimCount"
+                >
+                    —
+                </div>
+
+
+                <div class="stat-description">
+                    ● Claims under management
+                </div>
+
+            </div>
+
+
+
+            <!-- PLATFORM -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-title">
+                        Platform Status
+                    </span>
+
+                    <span class="stat-icon success-icon">
+                        ✓
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="stat-value status-value"
+                    id="platformStatus"
+                >
+                    CHECKING
+                </div>
+
+
+                <div class="stat-description">
+                    ● Application health
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================== -->
+        <!-- OPERATIONS -->
+        <!-- ===================================== -->
+
+        <section class="content-grid">
+
+
+            <div class="panel activity-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            OPERATIONS
+                        </span>
+
+                        <h3>
+                            Recent Activity
+                        </h3>
+
+                        <p>
+                            Latest insurance platform activity.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="text-button"
+                        onclick="refreshDashboard()"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+
+                <div class="activity-list">
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+                            C
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Customer management
+                            </strong>
+
+                            <span>
+                                Customer records available
+                            </span>
+
+                        </div>
+
+                        <span class="activity-status">
+                            Live
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+                            P
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Policy management
+                            </strong>
+
+                            <span>
+                                Insurance policies are available
+                            </span>
+
+                        </div>
+
+                        <span class="activity-status">
+                            Live
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+                            CL
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Claims management
+                            </strong>
+
+                            <span>
+                                Claims service is available
+                            </span>
+
+                        </div>
+
+                        <span class="activity-status">
+                            Live
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon success">
+                            ✓
+                        </div>
+
+                        <div class="activity-content">
+
+                            <strong>
+                                Platform health check
+                            </strong>
+
+                            <span id="healthMessage">
+                                Checking InsureFlow application...
+                            </span>
+
+                        </div>
+
+                        <span
+                            class="activity-status"
+                            id="healthStatus"
+                        >
+                            Checking
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================================= -->
+            <!-- QUICK ACTIONS -->
+            <!-- ================================= -->
+
+            <div class="panel quick-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            QUICK ACTIONS
+                        </span>
+
+                        <h3>
+                            Manage Insurance
+                        </h3>
+
+                        <p>
+                            Access your most-used services.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+
+                    <a
+                        href="/policies"
+                        class="quick-action"
+                    >
+
+                        <span class="quick-icon">
+                            ▣
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                My Policies
+                            </strong>
+
+                            <small>
+                                View and manage coverage
+                            </small>
+
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="/claims"
+                        class="quick-action"
+                    >
+
+                        <span class="quick-icon">
+                            ◈
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                Claims
+                            </strong>
+
+                            <small>
+                                Track your claims
+                            </small>
+
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="/analytics"
+                        class="quick-action"
+                    >
+
+                        <span class="quick-icon">
+                            ◉
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                Analytics
+                            </strong>
+
+                            <small>
+                                Review insurance activity
+                            </small>
+
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="/settings"
+                        class="quick-action"
+                    >
+
+                        <span class="quick-icon">
+                            ⚙
+                        </span>
+
+                        <span>
+
+                            <strong>
+                                Account Settings
+                            </strong>
+
+                            <small>
+                                Manage your account
+                            </small>
+
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================== -->
+        <!-- INSURANCE PORTFOLIO -->
+        <!-- ===================================== -->
+
+        <section class="panel portfolio-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="section-label">
+                        PORTFOLIO
+                    </span>
+
+                    <h3>
+                        Insurance Mix
+                    </h3>
+
+                    <p>
+                        Distribution based on your policies.
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="portfolio-total"
+                    id="portfolioTotal"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+
+            <div
+                class="insurance-grid"
+                id="insuranceGrid"
+            >
+
+
+                <!-- HEALTH -->
+
+                <div class="insurance-card">
+
+                    <div class="insurance-card-top">
+
+                        <span>
+                            Health Insurance
+                        </span>
+
+                        <strong id="healthPercentage">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar health"
+                            id="healthBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- LIFE -->
+
+                <div class="insurance-card">
+
+                    <div class="insurance-card-top">
+
+                        <span>
+                            Life Insurance
+                        </span>
+
+                        <strong id="lifePercentage">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar life"
+                            id="lifeBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MOTOR -->
+
+                <div class="insurance-card">
+
+                    <div class="insurance-card-top">
+
+                        <span>
+                            Motor Insurance
+                        </span>
+
+                        <strong id="motorPercentage">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div class="progress-bar motor"
+                             id="motorBar"
+                             style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OTHER -->
+
+                <div class="insurance-card">
+
+                    <div class="insurance-card-top">
+
+                        <span>
+                            Other Insurance
+                        </span>
+
+                        <strong id="otherPercentage">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar other"
+                            id="otherBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================== -->
+        <!-- FOOTER -->
+        <!-- ===================================== -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 InsureFlow
+            </span>
+
+            <span>
+                Secure Insurance Platform
+            </span>
+
+            <span>
+
+                <a href="/health">
+                    System Status
+                </a>
+
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- PROFILE MODAL -->
+<!-- ========================================= -->
+
+<div
+    id="profileModal"
+    class="modal-overlay"
+    onclick="closeProfile(event)"
+>
+
+    <div
+        class="profile-modal"
+        onclick="event.stopPropagation()"
+    >
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeProfile()"
+        >
+            ×
+        </button>
+
+
+        <div
+            class="modal-avatar"
+            id="modalAvatar"
+        >
+            SK
+        </div>
+
+
+        <h3 id="modalUserName">
+            Customer
+        </h3>
+
+
+        <p id="modalUserEmail">
+            Customer account
+        </p>
+
+
+        <a
+            href="/settings"
+            class="modal-button"
+        >
+            Account Settings
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================= -->
+
+<script>
+
+
+/*
+================================================
+GET INITIALS
+================================================
+*/
+
+function getInitials(
+    fullName
+) {
+
+    if (!fullName) {
+        return "IF";
+    }
+
+
+    const parts =
+        fullName
+            .trim()
+            .split(/\s+/);
+
+
+    if (parts.length === 1) {
+
+        return parts[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        parts[0][0] +
+        parts[parts.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+
+/*
+================================================
+LOAD LOGGED-IN USER
+================================================
+*/
+
+function loadUser() {
+
+    const savedUser =
+        sessionStorage.getItem(
+            "insureflow_user"
+        );
+
+
+    if (!savedUser) {
+
+        console.warn(
+            "No InsureFlow user found in session."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const user =
+            JSON.parse(savedUser);
+
+
+        const fullName =
+            user.full_name ||
+            "Customer";
+
+
+        const firstName =
+            fullName
+                .split(" ")[0];
+
+
+        const initials =
+            getInitials(fullName);
+
+
+        const userName =
+            document.getElementById(
+                "userName"
+            );
+
+
+        const welcomeName =
+            document.getElementById(
+                "welcomeName"
+            );
+
+
+        const modalUserName =
+            document.getElementById(
+                "modalUserName"
+            );
+
+
+        const modalUserEmail =
+            document.getElementById(
+                "modalUserEmail"
+            );
+
+
+        const userRole =
+            document.getElementById(
+                "userRole"
+            );
+
+
+        const userAvatar =
+            document.getElementById(
+                "userAvatar"
+            );
+
+
+        const modalAvatar =
+            document.getElementById(
+                "modalAvatar"
+            );
+
+
+        if (userName) {
+
+            userName.textContent =
+                fullName;
+
+        }
+
+
+        if (welcomeName) {
+
+            welcomeName.textContent =
+                firstName;
+
+        }
+
+
+        if (modalUserName) {
+
+            modalUserName.textContent =
+                fullName;
+
+        }
+
+
+        if (modalUserEmail) {
+
+            modalUserEmail.textContent =
+                user.email ||
+                "Customer account";
+
+        }
+
+
+        if (userRole) {
+
+            userRole.textContent =
+                user.role ||
+                "Customer";
+
+        }
+
+
+        if (userAvatar) {
+
+            userAvatar.textContent =
+                initials;
+
+        }
+
+
+        if (modalAvatar) {
+
+            modalAvatar.textContent =
+                initials;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load saved user:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/*
+================================================
+LOAD CUSTOMER COUNT
+================================================
+*/
+
+async function loadCustomers() {
+
+    const response =
+        await fetch(
+            "/api/customers/"
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to load customers."
+        );
+
+    }
+
+
+    const customers =
+        await response.json();
+
+
+    document.getElementById(
+        "customerCount"
+    ).textContent =
+        customers.length;
+
+
+    return customers;
+
+}
+
+
+
+/*
+================================================
+LOAD POLICIES
+================================================
+*/
+
+async function loadPolicies() {
+
+    const response =
+        await fetch(
+            "/api/policies/"
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to load policies."
+        );
+
+    }
+
+
+    const policies =
+        await response.json();
+
+
+    const activePolicies =
+        policies.filter(
+            policy =>
+                policy.status === "Active"
+        );
+
+
+    document.getElementById(
+        "policyCount"
+    ).textContent =
+        activePolicies.length;
+
+
+    updateInsuranceMix(
+        policies
+    );
+
+
+    return policies;
+
+}
+
+
+
+/*
+================================================
+LOAD CLAIMS
+================================================
+*/
+
+async function loadClaims() {
+
+    const response =
+        await fetch(
+            "/api/claims/"
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to load claims."
+        );
+
+    }
+
+
+    const claims =
+        await response.json();
+
+
+    document.getElementById(
+        "claimCount"
+    ).textContent =
+        claims.length;
+
+
+    return claims;
+
+}
+
+
+
+/*
+================================================
+UPDATE INSURANCE MIX
+================================================
+
+Example:
+
+Health = 2
+Life   = 1
+Motor  = 1
+
+Total = 4
+
+Health = 50%
+Life   = 25%
+Motor  = 25%
+*/
+
+function updateInsuranceMix(
+    policies
+) {
+
+    const total =
+        policies.length;
+
+
+    const counts = {
+
+        health: 0,
+
+        life: 0,
+
+        motor: 0,
+
+        other: 0
+
+    };
+
+
+    policies.forEach(
+        policy => {
+
+            const type =
+                (
+                    policy.policy_type ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+                type.includes("health")
+            ) {
+
+                counts.health++;
+
+            } else if (
+                type.includes("life")
+            ) {
+
+                counts.life++;
+
+            } else if (
+                type.includes("motor") ||
+                type.includes("auto") ||
+                type.includes("vehicle")
+            ) {
+
+                counts.motor++;
+
+            } else {
+
+                counts.other++;
+
+            }
+
+        }
+    );
+
+
+    let percentages = {
+
+        health: 0,
+
+        life: 0,
+
+        motor: 0,
+
+        other: 0
+
+    };
+
+
+    if (total > 0) {
+
+        percentages.health =
+            Math.round(
+                counts.health /
+                total *
+                100
+            );
+
+
+        percentages.life =
+            Math.round(
+                counts.life /
+                total *
+                100
+            );
+
+
+        percentages.motor =
+            Math.round(
+                counts.motor /
+                total *
+                100
+            );
+
+
+        percentages.other =
+            Math.round(
+                counts.other /
+                total *
+                100
+            );
+
+    }
+
+
+    /*
+     * Prevent rounding from producing
+     * more than 100%.
+     */
+    const percentageTotal =
+        percentages.health +
+        percentages.life +
+        percentages.motor +
+        percentages.other;
+
+
+    if (
+        total > 0 &&
+        percentageTotal !== 100
+    ) {
+
+        percentages.other +=
+            100 - percentageTotal;
+
+    }
+
+
+    /*
+     * Update text.
+     */
+
+    document.getElementById(
+        "healthPercentage"
+    ).textContent =
+        percentages.health + "%";
+
+
+    document.getElementById(
+        "lifePercentage"
+    ).textContent =
+        percentages.life + "%";
+
+
+    document.getElementById(
+        "motorPercentage"
+    ).textContent =
+        percentages.motor + "%";
+
+
+    document.getElementById(
+        "otherPercentage"
+    ).textContent =
+        percentages.other + "%";
+
+
+    /*
+     * Update progress bars.
+     */
+
+    document.getElementById(
+        "healthBar"
+    ).style.width =
+        percentages.health + "%";
+
+
+    document.getElementById(
+        "lifeBar"
+    ).style.width =
+        percentages.life + "%";
+
+
+    document.getElementById(
+        "motorBar"
+    ).style.width =
+        percentages.motor + "%";
+
+
+    document.getElementById(
+        "otherBar"
+    ).style.width =
+        percentages.other + "%";
+
+
+    /*
+     * Show total distribution.
+     */
+
+    document.getElementById(
+        "portfolioTotal"
+    ).textContent =
+        total > 0
+            ? "100%"
+            : "0%";
+
+}
+
+
+
+/*
+================================================
+CHECK APPLICATION HEALTH
+================================================
+*/
+
+async function checkHealth() {
+
+    const status =
+        document.getElementById(
+            "platformStatus"
+        );
+
+
+    const healthMessage =
+        document.getElementById(
+            "healthMessage"
+        );
+
+
+    const healthStatus =
+        document.getElementById(
+            "healthStatus"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/health"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Health check failed."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (status) {
+
+            status.textContent =
+                data.status === "UP"
+                    ? "UP"
+                    : "DOWN";
+
+        }
+
+
+        if (healthMessage) {
+
+            healthMessage.textContent =
+                data.status === "UP"
+                    ? "InsureFlow application is running"
+                    : "Application health check failed";
+
+        }
+
+
+        if (healthStatus) {
+
+            healthStatus.textContent =
+                data.status === "UP"
+                    ? "Now"
+                    : "Issue";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Health check failed:",
+            error
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "DOWN";
+
+        }
+
+
+        if (healthMessage) {
+
+            healthMessage.textContent =
+                "Unable to reach InsureFlow health endpoint";
+
+        }
+
+
+        if (healthStatus) {
+
+            healthStatus.textContent =
+                "Issue";
+
+        }
+
+    }
+
+}
+
+
+
+/*
+================================================
+LOAD ALL DASHBOARD DATA
+================================================
+*/
+
+async function loadDashboardData() {
+
+    try {
+
+        await Promise.all([
+            loadCustomers(),
+            loadPolicies(),
+            loadClaims(),
+            checkHealth()
+        ]);
+
+
+        console.log(
+            "Dashboard data loaded successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard data loading failed:",
+            error
+        );
+
+
+        /*
+         * Display a safe fallback instead
+         * of leaving the dashboard confusing.
+         */
+
+        const customerCount =
+            document.getElementById(
+                "customerCount"
+            );
+
+
+        const policyCount =
+            document.getElementById(
+                "policyCount"
+            );
+
+
+        const claimCount =
+            document.getElementById(
+                "claimCount"
+            );
+
+
+        if (
+            customerCount.textContent === "—"
+        ) {
+
+            customerCount.textContent =
+                "0";
+
+        }
+
+
+        if (
+            policyCount.textContent === "—"
+        ) {
+
+            policyCount.textContent =
+                "0";
+
+        }
+
+
+        if (
+            claimCount.textContent === "—"
+        ) {
+
+            claimCount.textContent =
+                "0";
+
+        }
+
+    }
+
+}
+
+
+
+/*
+================================================
+PROFILE MODAL
+================================================
+*/
+
+function openProfile() {
+
+    const modal =
+        document.getElementById(
+            "profileModal"
+        );
+
+
+    modal.classList.add(
+        "show"
+    );
+
+}
+
+
+
+function closeProfile(
+    event
+) {
+
+    if (
+        event &&
+        event.target !==
+        event.currentTarget
+    ) {
+
+        return;
+
+    }
+
+
+    const modal =
+        document.getElementById(
+            "profileModal"
+        );
+
+
+    modal.classList.remove(
+        "show"
+    );
+
+}
+
+
+
+/*
+================================================
+NOTIFICATIONS
+================================================
+*/
+
+function showNotification() {
+
+    alert(
+        "You are all caught up. No new notifications."
+    );
+
+}
+
+
+
+/*
+================================================
+REFRESH
+================================================
+*/
+
+function refreshDashboard() {
+
+    loadDashboardData();
+
+}
+
+
+
+/*
+================================================
+INITIALIZE DASHBOARD
+================================================
+*/
+
+loadUser();
+
+loadDashboardData();
+
+</script>
+
+</body>
+
+</html>
