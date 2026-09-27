@@ -50,3 +50,11 @@ dist/
 
 # Docker
 docker-compose.override.yml
+
+# Test coverage
+coverage.xml
+.coverage
+htmlcov/
+
+# SonarQube
+.sonar/
